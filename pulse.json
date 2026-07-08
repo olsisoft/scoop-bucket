@@ -1,0 +1,35 @@
+{
+  "//": "Scoop manifest for the Pulse CLI. The source repo is PRIVATE, so downloads go through the public release proxy (updates.streamflowmesh.io/download/<tag>/<asset>), never github.com. Publish it into a bucket repo you own (e.g. olsisoft/scoop-bucket as pulse.json) so Windows users can: `scoop bucket add pulse https://github.com/olsisoft/scoop-bucket ; scoop install pulse`. Per release, update version + the hash (the .sha256 files are proxied next to each asset). This installs the self-contained app-image (a native launcher + an embedded JRE — NO JDK needed): the .zip auto-extracts to a pulse/ dir; with extract_dir 'pulse' that dir becomes the app root and Scoop shims its pulse.exe (jpackage puts the Windows launcher at the app-image root, not under bin/). See docs/PULSE-CLI-DISTRIBUTION.md.",
+  "version": "2.7.7",
+  "description": "Pulse — declare a real-time app in YAML; it compiles to an API, SDKs and a UI.",
+  "homepage": "https://github.com/olsisoft/streamflow",
+  "architecture": {
+    "64bit": {
+      "url": "https://updates.streamflowmesh.io/download/pulse-cli-v2.7.7/pulse-windows-x86_64.zip",
+      "hash": "e7ce59af86413778ced778904bb5e4dda8c2e0bee1184637e90190c64964832c",
+      "extract_dir": "pulse"
+    }
+  },
+  "bin": "pulse.exe",
+  "shortcuts": [
+    [
+      "pulse.exe",
+      "Pulse CLI"
+    ]
+  ],
+  "checkver": {
+    "url": "https://updates.streamflowmesh.io/latest-pulse-cli",
+    "jsonpath": "$.version"
+  },
+  "autoupdate": {
+    "architecture": {
+      "64bit": {
+        "url": "https://updates.streamflowmesh.io/download/pulse-cli-v$version/pulse-windows-x86_64.zip",
+        "extract_dir": "pulse"
+      }
+    },
+    "hash": {
+      "url": "$url.sha256"
+    }
+  }
+}
